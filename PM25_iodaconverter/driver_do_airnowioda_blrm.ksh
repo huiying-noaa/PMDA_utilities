@@ -4,14 +4,10 @@ export PYTHONPATH="${PYTHONPATH}://scratch2/BMC/wrfruc/rli/JEDI/ioda-bundle/ioda
 export sitefile=True
 
 
-for yy in 2021 2024; do
-mm=09
+yy=2024
+mm=07
+dd=20
+hh=00
+/usr/bin/ksh convert-airnow-blrm.ksh ${yy}${mm}${dd}${hh}
 
-for dd in $(seq -w 01 31); do
-for hh in $(seq -w 00 23); do
-/usr/bin/ksh /scratch2/BMC/amb-verif/hluo/pmobs/convert-airnow-blrm.ksh ${yy}${mm}${dd}${hh}
 
-
-done
-done
-done
