@@ -1,6 +1,8 @@
 #!/bin/ksh 
 
-set -ux
+#set -ux
+
+export sitefile=True
 
 airnow_in="test" #/scratch2/BMC/amb-verif/hluo/pmobs/airnow
 airnow_out="testout" #/scratch2/BMC/amb-verif/hluo/pmobs/airnowioda
@@ -20,8 +22,8 @@ fi
 YYYY=$(echo $1|cut -c1-4)
 MM=$(echo $1|cut -c5-6)
 DD=$(echo $1|cut -c7-8)
-export sitefile=True
-echo"settings done"
+
+# optional data downloading
 #if [ ! -s ${airnow_in}/HourlyData_$1.dat ]; then
 # wget https://s3-us-west-1.amazonaws.com//files.airnowtech.org/airnow/$YYYY/$YYYY$MM$DD/HourlyData_$1.dat -O ${airnow_in}/HourlyData_$1.dat
 #fi

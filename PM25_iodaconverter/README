@@ -1,0 +1,21 @@
+Convert aws downloaded airnow data to ioda nc file for RRFS-SD PM2.5 DA with baseline removed
+Huiying Luo, last updated Mar 2025
+
+How to:
+1. source modulefile
+2. Set time for conversion in driver_do_airnowioda_blrm.ksh; Set proper pathes, switch data download on/off in convert-airnow-blrm.ksh
+3. ./driver_do_airnowioda_blrm.ksh  
+
+Once run successfully, 
+airnow-2024072000-blrm-v1.nc will be generated in testout
+
+Info:
+PM2.5 baseline is estimated from 2015-2024 obs using method adapted from O'Doherty et al. (2001) and Hung et al. (2019) 
+Full year baseline will be shared on github, Jet, and Hera once available
+Version 1 baseline for July is provided for testing in test folder as IODA_hourlyPM25baseline_88101_07_25rms.nc 
+
+In test folder:
+Version 1 baseline for July is provided for testing: IODA_hourlyPM25baseline_88101_07_25rms.nc
+airnow obs: HourlyData_2024072000.dat (can be downloaded by scripts in convert-airnow-blrm.ksh)
+site info: monitoring_site_locations_20240720.dat (can be downloaded by scripts in convert-airnow-blrm.ksh)
+
