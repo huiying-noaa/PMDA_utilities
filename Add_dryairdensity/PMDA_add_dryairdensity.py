@@ -62,7 +62,7 @@ denstest = P / (T * Rconst)
 ## Add variable to core
 if 'dry_air_density' in datacore.variables.keys():
     print('dry_air_density already in file, updating value...')
-    datacore.variables['dry_air_density'][:] = denstest.astype('float64')
+    datacore.variables['dry_air_density'][:] = denstest.astype('float32')
 else:
     print('Adding dry_air_density...')
     fed_out = datacore.createVariable('dry_air_density',np.float32,('Time','zaxis_1','yaxis_2','xaxis_1'),chunksizes=np.shape(delp))
