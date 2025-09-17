@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# By Huiying Luo, huiying.luo@noaa.gov, Sept 2025, published v1.1
+# By Huiying Luo, huiying.luo@noaa.gov, Sept 2025, published v1.2
 
 ## Script to add/update dry air density variable to RRFS FV3 background core file for PM2.5 DA
 ## How to:
@@ -15,14 +15,13 @@ import shutil
 
 ## Input
 filecore = sys.argv[1]
-
+print()
+print('Calculating dry air density for '+ filecore)
 if len(sys.argv)==3 and sys.argv[2]==0:
-    print('NOTE: Core file will be modified!')
+    print('NOTE: No original copy will be saved!')
 else:
     shutil.copyfile(filecore, filecore+'.copy')
     print('Core file copy saved to '+filecore+'.copy')
-
-print('Calculating dry air density for '+ filecore)
 
 ## Read and prepare data
 datacore =nc.Dataset(filecore,'r+')
@@ -40,7 +39,7 @@ T = np.ma.masked_where(T == 9.969209968386869e+36, T)
 
 # v1: use ptop to get a more precise estimate. P at center ~ average of top and bottom, validated using Pcenter.py
 ptop=212.637 #Pa for fv3
-print('Note: Used Ptop at 212.637 Pa for RRFS FV3!')
+print('NOTE: Used Ptop at 212.637 Pa for RRFS FV3!')
 P=np.zeros(delp.shape)
 Pcum=np.cumsum(delp, axis=1)
 P[0,0,:,:]=ptop+delp[0,0,:,:]/2
@@ -62,21 +61,12 @@ denstest = P / (T * Rconst)
 
 ## Add variable to core
 if 'dry_air_density' in datacore.variables.keys():
-    #datacore['dry_air_density'][:] = denstest.astype('float32') # doesn't work for the inital test density w wrong dim
-    for i in range(100):
-        try:
-            datacore.renameVariable('dry_air_density','dry_air_density_'+str(i)) # rename original to _i if exist
-            print('Previous estimate saved to V '+ str(i))
-            break
-        except:
-            print('keep searching for a name for previous estimate...')
-    print('Updating dry_air_density...')
+    print('dry_air_density already in file, updating value...')
+    datacore.variables['dry_air_density'][:] = denstest.astype('float64')
 else:
     print('Adding dry_air_density...')
-
-
-fed_out = datacore.createVariable('dry_air_density',np.float32,('Time','zaxis_1','yaxis_2','xaxis_1'),chunksizes=np.shape(delp))
-fed_out[:] = denstest.astype('float64')
+    fed_out = datacore.createVariable('dry_air_density',np.float32,('Time','zaxis_1','yaxis_2','xaxis_1'),chunksizes=np.shape(delp))
+    fed_out[:] = denstest.astype('float32')
 
 datacore.close()
 
