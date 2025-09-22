@@ -1,0 +1,7 @@
+Input files: test/HourlyData_2024072000.dat test/monitoring_site_locations_20240720.dat ./IODA_hourlyPM25baseline_v2r1.nc airnow_sites_epalist_20240716.csv
+Output ioda file: testout/airnow-2024072000-blrm-v2.nc
+When obs site location setting not found to match with nearby sites, used non-urban as default.
+
+63 out of 1994 observation sites discarded. Change KeepNoncalib to 1 to keep raw observation at these locations.
+
+Airnow ioda file saved for baseline-removed PM2.5!
