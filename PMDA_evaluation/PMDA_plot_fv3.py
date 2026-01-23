@@ -23,15 +23,18 @@ from matplotlib.colors import CenteredNorm
 print('loaded!')
 
 ## Input data
-homedir = '/mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/PMDA2/'
-infile_grd = homedir+'stmp/2024073001/FV3JEDI_prod/00/INPUT/fv3_grid_spec'
-checkt='2024073001'
-corefilelist = ['nwges/2024073000/fcst_fv3lam/RESTART/20240730.010000.fv_core.res.tile1.nc','stmp/2024073001/FV3JEDI_prod/00/INPUT/fv_core.res.tile1.nc','stmp/2024073001/FV3JEDI_prod/00/PM25.fv_core.res.nc','stmp/2024073001/fcst_fv3lam/INPUT/fv_core.res.tile1.nc'] # restart from last hour fcst, after met GSI, aerosol DA output, after aerosol DA and non-var cloud
-
-varlist = ['W','DZ','liq_wat','ice_wat','rainwat','snowwat','graupel','water_nc','rain_nc','o3mr','liq_aero','sgs_tke']
-varincorefile = [1,1,0,0,0,0,0,0,0,0,0,0]
+homedir = '/lfs5/BMC/wrfruc/bjallen/JEDI-AOD/RRFS_ParkFire_AOD_DAexp2_main/v0.7.7/'
+infile_grd = '/mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/PMDA3/stmp/2024072400/FV3JEDI_prod/00/INPUT/fv3_grid_spec'
+checkt='2024072417'
+corefilelist = ['nwges/2024072416/fcst_fv3lam/RESTART/20240724.170000.fv_core.res.tile1.nc','stmp/2024072417/FV3JEDI_prod/00/AOD.fv_core.res.nc','stmp/2024072417/FV3JEDI_prod/00/AOD.fv_core.res.nc','stmp/2024072417/fcst_fv3lam/INPUT/fv_core.res.tile1.nc']
+#corefilelist = ['nwges/2024072323/fcst_fv3lam/RESTART/20240724.000000.fv_core.res.tile1.nc','stmp/2024072400/FV3JEDI_prod/00/INPUT/fv_core.res.tile1.nc','stmp/2024072400/FV3JEDI_prod/00/PM25.fv_core.res.nc','stmp/2024072400/fcst_fv3lam/INPUT/fv_core.res.tile1.nc'] # restart from last hour fcst, after met GSI, aerosol DA output, after aerosol DA and non-var cloud
+#corefilelist = ['nwges/2024072416/fcst_fv3lam/RESTART/20240724.170000.fv_core.res.tile1.nc','stmp/2024072417/FV3JEDIPM25_prod/00/INPUT/fv_core.res.tile1.nc','stmp/2024072417/FV3JEDIPM25_prod/00/PM25.fv_core.res.nc','stmp/2024072417/fcst_fv3lam/INPUT/fv_core.res.tile1.nc'] # restart from last hour fcst, after met GSI, aerosol DA output, after aerosol DA and non-var cloud    
+#varlist = ['v','va','smoke','dust','coarsepm','sphum','rainwat','u','T','delp','phis','ua','W','DZ','liq_wat','ice_wat','rainwat','snowwat','graupel','water_nc','rain_nc','o3mr','liq_aero','sgs_tke']
+#varincorefile = [1,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]
 #varlist = ['v','va','smoke','dust','coarsepm','sphum','rainwat','u','T','delp','phis','ua']
 #varincorefile = [1,1,0,0,0,0,0,1,1,1,1,1]
+varlist = ['u','smoke','dust','coarsepm']
+varincorefile = [1,0,0,0]
 
 ## Plot control and prep
 cartopy.config['data_dir'] = "/mnt/lfs6/BMC/wrfruc/hluo/other_eva/natural_earth_data"
@@ -41,9 +44,10 @@ pos=[[0,0.55,0.3,0.4],[0.31,0.55,0.3,0.4],[0.62,0.55,0.3,0.4],[0,0.05,0.3,0.4],[
 grd = xa.open_dataset(infile_grd)
 
 ## Plot per var
-for varid in range(2,len(varlist)):#range(len(varlist)):
+for varid in range(len(varlist)):
     var=varlist[varid]
-    plot_fn = homedir+'DAcheckk_'+var+'_'+checkt+'.png'     
+    #plot_fn = homedir+'DAcheck_'+var+'_'+checkt+'.png'     
+    plot_fn = '/lfs6/data_untrusted/Huiying.Luo/DAcheckAOD_'+var+'_'+checkt+'.png'
     if varincorefile[varid]==0:
         filelist=[item.replace('core','tracer') for item in corefilelist]
     else:
@@ -74,7 +78,7 @@ for varid in range(2,len(varlist)):#range(len(varlist)):
     fig, [[ax1, ax2, ax3], [ax4, ax5, ax6]] = plt.subplots(nrows=2, ncols=3, subplot_kw={'projection': ccrs.PlateCarree()},sharex=True,sharey=True,figsize=(25/2*0.8,10*0.8))
 
     ## Bottom layer for 3D/2D
-    if 1==1:
+    try:
         if len(vard)==3:
             layerid=0
             plotvar=MetDA[var][0,:,:].values-Base[var][0,:,:].values
@@ -91,7 +95,7 @@ for varid in range(2,len(varlist)):#range(len(varlist)):
         ax1.set_position(pos[0])
         cbar_ax=fig.add_axes([0.28,0.55,0.01,0.4])
         cbar=plt.colorbar(p1,cax=cbar_ax,extend='both')
-    else:
+    except:
         print(var+' is not in MetDA!')
     
     
@@ -200,5 +204,5 @@ for varid in range(2,len(varlist)):#range(len(varlist)):
     
     plt.savefig(plot_fn,dpi=300, bbox_inches='tight')
     print(f'Output plot saved as {plot_fn}')
-    
+    plt.close() 
     

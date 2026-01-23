@@ -1,0 +1,110 @@
+cost function:
+  cost type: 3D-Var
+  time window:
+    begin: 2024-07-28T18:00:00Z
+    length: PT2H
+
+  analysis variables: [
+                     mixing_ratio_of_smoke_wrt_dry_air,
+                     mixing_ratio_of_dust_wrt_dry_air,
+                     mixing_ratio_of_coarsepm_wrt_dry_air]
+  geometry:
+    fms initialization:
+      namelist filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/fmsmpp.nml
+      field table filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/field_table_lam_rrfs
+    namelist filename:  /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/input_rrfs_cmaq_c3359.nml
+    akbk: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/akbk65.nc4
+    field metadata override: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+  background:
+    datetime: 2024-07-28T19:00:00Z
+    filetype: fms restart
+    datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/INPUT
+    filename_core: fv_core.res.tile1.nc
+    filename_trcr: fv_tracer.res.tile1.nc
+    filename_cplr: coupler.res
+    state variables:  [T,delp,ps,sphum,phis,dry_air_density,smoke,dust,coarsepm] #T,DELP
+  background error:
+    covariance model: SABER
+    saber central block:
+      saber block name: diffusion
+      read:
+        groups:
+        - variables:
+          - mixing_ratio_of_smoke_wrt_dry_air
+          - mixing_ratio_of_dust_wrt_dry_air
+          - mixing_ratio_of_coarsepm_wrt_dry_air
+          horizontal:
+            filepath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/PM25_diffusion_hz
+          vertical:
+            levels: 65
+            filepath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/PM25_diffusion_vt
+    saber outer blocks:
+    - saber block name: StdDev
+      read:
+        model file:
+          datetime: '2024-07-28T19:00:00Z'
+          skip coupler file: true
+          filetype: fms restart
+          psinfile: true
+          datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/INPUT
+          filename_core: fv_core.res.tile1.nc
+          filename_trcr: fv_tracer.res.tile1.nc
+          filename_cplr: coupler.res
+  observations:
+    observers:
+    - obs space:
+        name: PM25
+        obsdatain:
+          engine:
+            type: H5File
+            obsfile: /mnt/lfs6/BMC/wrfruc/hluo/PMobs/airnowioda_blrm/airnow-2024072819-blrm-v2.nc
+        obsdataout:
+          engine:
+            type: H5File
+            obsfile: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/jedi_pm25_diag_202407281900.nc #Data/hofx/3dvar_rrfs-sd_vader_pm25_2024072018_rrfs_diff_Parkdombkgerr_jet.nc
+        simulated variables: [particulatematter2p5Surface]
+      obs operator:
+        name: VertInterp
+        observation alias file: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/testinput/obsop_name_map.yaml
+        vertical coordinate: height_above_mean_sea_level
+        observation vertical coordinate: height
+        observation vertical coordinate group: MetaData
+      obs filters:
+      - filter: Domain Check
+        where:
+        - variable:
+            name: air_pressure_at_surface@GeoVaLs
+          minvalue: 1.0 
+      obs error:
+        covariance model: diagonal
+variational:
+  minimizer:
+    algorithm: DRPCG
+  iterations:
+  - ninner: 50 
+    gradient norm reduction: 1e-3
+    test: on
+    geometry:
+      namelist filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/input_rrfs_cmaq_c3359.nml
+      akbk: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/akbk65.nc4
+      field metadata override: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+    diagnostics:
+      departures: ombg
+  - ninner: 50 
+    gradient norm reduction: 1e-3
+    test: on
+    geometry:
+      namelist filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/input_rrfs_cmaq_c3359.nml
+      akbk: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/akbk65.nc4
+      field metadata override: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+    diagnostics:
+      departures: ombg
+
+final:
+  diagnostics:
+    departures: oman
+output:
+  filetype: fms restart
+  datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00
+  prefix: 'PM25'
+  frequency: PT1H

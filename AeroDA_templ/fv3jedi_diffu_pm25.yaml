@@ -1,0 +1,33 @@
+geometry:
+  fms initialization:
+    namelist filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/fmsmpp.nml
+    field table filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/field_table_lam_rrfs
+  namelist filename: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/input_rrfs_cmaq_c3359.nml
+  akbk: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fv3files/akbk65.nc4
+  field metadata override: /mnt/lfs6/BMC/wrfruc/hluo/PM3dvar/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+background:
+  datetime: 2024-07-28T19:00:00Z
+  filetype: fms restart
+  datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/INPUT
+  filename_core: fv_core.res.tile1.nc
+  filename_trcr: fv_tracer.res.tile1.nc
+  filename_cplr: coupler.res
+  state variables:  [smoke,dust,coarsepm]
+background error:
+  covariance model: SABER
+  saber central block:
+    saber block name: diffusion
+    calibration:
+      normalization:
+        iterations: 1000
+      groups:
+      - horizontal:
+          fixed value: 46.5e3
+        write:
+          filepath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/PM25_diffusion_hz
+      - vertical:
+          levels: 65
+          fixed value: 5.0
+          as gaussian: true
+        write:
+          filepath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIPM25_prod/00/PM25_diffusion_vt

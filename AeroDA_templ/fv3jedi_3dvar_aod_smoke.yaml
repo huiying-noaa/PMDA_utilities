@@ -1,0 +1,108 @@
+cost function:
+  cost type: 3D-Var
+  time window:
+    begin: 2024-07-28T18:00:00Z
+    length: PT2H
+  analysis variables: [mixing_ratio_of_smoke_wrt_dry_air]
+  geometry:
+    fms initialization:
+      namelist filename: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fv3files/fmsmpp.nml
+      field table filename: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fv3files/field_table_lam_rrfs
+    namelist filename: GSL_fv3input_for_aod.nml
+    akbk: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fv3files/akbk65.nc4
+    field metadata override: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+  background:
+    datetime: 2024-07-28T19:00:00Z
+    filetype: fms restart
+    datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/fcst_fv3lam/INPUT
+    filename_core: fv_core.res.tile1.nc
+    filename_trcr: fv_tracer.res.tile1.nc
+    filename_cplr: coupler.res
+    state variables:  [T,delp,sphum,phis,smoke,dust,coarsepm]
+
+  background error:
+    covariance model: SABER
+    saber central block:
+      saber block name: diffusion
+      read:
+        groups:
+        - variables:
+          - mixing_ratio_of_smoke_wrt_dry_air
+          horizontal:
+            filepath: rrfssd_conus.diffusion_hz
+          vertical:
+            levels: 65
+            filepath: rrfssd_conus.diffusion_vt
+
+    saber outer blocks:
+    - saber block name: StdDev
+      read:
+        model file:
+          datetime: '2024-07-28T19:00:00Z'
+          skip coupler file: true
+          filetype: fms restart
+          psinfile: true
+          datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/fcst_fv3lam/INPUT
+          filename_core: fv_core.res.tile1.nc
+          filename_trcr: fv_tracer.res.tile1.nc
+          filename_cplr: coupler.res
+
+  observations:
+    observers:
+    - obs space:
+        name: Aod
+        obsdatain:
+          engine:
+            type: H5File
+            obsfile: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/Park_VIIRS_IODA_sd/ioda/VIIRS_AOD_2024072818_medhighConf_medhighQC_0p75thin_nesdis_maskout_IODA_smoke.nc
+            missing file action: "warn"
+        obsdataout:
+          engine:
+            type: H5File
+            obsfile: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIAOD_prod/00/jedi_aod_diag_202407281900.nc
+        simulated variables: [aerosolOpticalDepth]
+        channels: 4
+      obs filters:
+      - filter: Domain Check
+        where:
+        - variable:
+            name: aerosolOpticalDepth@PreQC
+          minvalue: 0
+          maxvalue: 1
+
+      #- filter: Gaussian Thinning
+      #  horizontal_mesh:   18 #km = 0.1 deg at equator
+
+      obs operator:
+        name: AodCRTM
+        Absorbers: [H2O,O3]
+        obs options:
+          Sensor_ID: v.viirs-m_npp
+          EndianType: little_endian
+          CoefficientPath: Data/crtm/
+          AerosolCoeff_File: AerosolCoeff.GOCART-GEOS5.bin
+          AerosolOption: aerosols_gocart_rrfs
+      obs error:
+        covariance model: diagonal
+
+variational:
+  minimizer:
+    algorithm: DRPCG
+  iterations:
+  - ninner: 100
+    gradient norm reduction: 1e-10
+    test: on
+    geometry:
+      namelist filename: GSL_fv3input_for_aod.nml
+      akbk: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fv3files/akbk65.nc4
+      field metadata override: /lfs5/BMC/wrfruc/bjallen/JEDI-AOD/3dvar_c84/Data/fieldmetadata/lam_cmaq_v10.yaml
+    diagnostics:
+      departures: ombg
+final:
+  diagnostics:
+    departures: oman
+output:
+  filetype: fms restart
+  prefix: 'AOD'
+  datapath: /mnt/lfs6/BMC/wrfruc/hluo/workflow/AOD_DA/AeroDA/stmp/2024072819/FV3JEDIAOD_prod/00
+  frequency: PT2H
