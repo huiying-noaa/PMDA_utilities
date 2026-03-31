@@ -1,26 +1,24 @@
-##!/bin/bash
-
-#PBS -A RRFS-DEV
-#PBS -q dev_transfer
-#PBS -l select=1:ncpus=1:mem=2G
-#PBS -l walltime=5:59:00
-#PBS -j oe
-#PBS -N output_rrfs_retro_det_nwges
-
+#!/bin/sh
+  
+#SBATCH -A wrfruc
+#SBATCH -t 06:00:00
+#SBATCH --ntasks=1
+#SBATCH --partition=u1-service
 set -x
 
 #----------------------------------------
 dateval=`date`
-echo "Started archive at "$dateval 
+echo "Started archive retrieval at "$dateval 
 
-module load hpss
+#module load hpss
 
-version="v0.9.7"
-export ARCHIVEDIR="/NCEPDEV/emc-meso/2year/emc.lam/rrfs_retro/${version}"
-mkdir -p /lfs/f2/t2o/ptmp/emc/ptmp/emc.lam/rrfs/${version}/nwges
-cd /lfs/f2/t2o/ptmp/emc/ptmp/emc.lam/rrfs/${version}/nwges
+version=${NAMEIN}
+export ARCHIVEDIR="/5year/BMC/wrfruc/hluo/PF_FV3_Jet/${version}"
+mkdir -p /scratch4/BMC/wrfruc/hluo/PF_FV3/${version}/monet
+cd /scratch4/BMC/wrfruc/hluo/PF_FV3/${version}/monet
 
-days=20240518
+days=${DAYSIN}
+cycs=${CYCSIN}
 
 export day=${days:6:2}
 export year=${days:0:4}
@@ -28,16 +26,15 @@ export month=${days:4:2}
 
 export RUN="rrfs"
 
-  for onecyc in 18; do
+  for onecyc in ${cycs}; do
 
     onerun=${RUN}.$year$month$day/${onecyc}
     echo "extract files from ${onerun}"
     hour=${onerun##*/}
 
-    htar -xf $ARCHIVEDIR/$year/$month/$day/lbcs_ctrl_${year}${month}${day}${hour}.tar
-    htar -xf $ARCHIVEDIR/$year/$month/$day/nwges_ctrl_${year}${month}${day}${hour}.tar
+    htar -xf $ARCHIVEDIR/$year/$month/$day/monet_${version}_${year}${month}${day}${hour}.tar
   done
 
 dateval=`date`
 
-echo "Completed archive at "$dateval 
+echo "Completed at "$dateval 
