@@ -49,8 +49,8 @@ graph TD
     ioda_bufr -->|IODA Formatted Obs| jedivar
 
     prep_lbc -->|LBC Data| fcst
-    jedivar -->|Analysis State (if cyc != 00)| fcst
-    prep_ic -->|Coldstart State (if cyc == 00)| fcst
+    jedivar -->|"Analysis State (if cyc != 00)"| fcst
+    prep_ic -->|"Coldstart State (if cyc == 00)"| fcst
     prep_chem -->|Chemical Tracers| fcst
 
     fcst -->|mpasout.nc| save_f01
