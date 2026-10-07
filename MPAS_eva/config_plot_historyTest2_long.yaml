@@ -1,0 +1,61 @@
+dataset:
+  files:
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test2/hrly_12km/stmp/20240512/rrfs_fcst_00_v2.1.4/det/history.2024-05-12_06.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test2/hrly_12km/stmp/20240512/rrfs_fcst_00_v2.1.4/det/history.2024-05-12_12.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test2/hrly_12km/stmp/20240512/rrfs_fcst_00_v2.1.4/det/history.2024-05-12_18.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test2/hrly_12km/stmp/20240512/rrfs_fcst_00_v2.1.4/det/history.2024-05-13_00.00.00.nc
+  gridfile: '/gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260608/rrfs-workflow/fix/conus12km/conus12km.grid.nc'
+  vars:
+    smoke_fine:
+      source: native
+      lev:
+        - 25
+        - 0
+    dust_fine:
+      source: native
+      lev:
+        - 25
+        - 0
+
+plot:
+  # {var} = Variable name
+  # {lev} = Variable level
+  # {varln} = Variable "long name" (not recommended for filenames since these often contain spaces)
+  # {units} = Variable units
+  # {filename} = Name of file being read for plotted data
+  # {fnme} = Name of file (minus extension) being read for plotted data
+  # {date} = The date of plotted data, in %Y-%m-%d format
+  # {time} = The time of plotted data, in %H:%M:%S format
+
+  filename: 'testout/Test2_longhr_{var}_lev{lev}_{date}_{time}_12km.png' #output
+  title:
+    text: 'Plot of {varln}, level {lev} for MPAS forecast, {date} {time}'
+    fontsize: 8
+  edges:
+    #    color: black
+    color: face
+    # set width to 0 to have no borders
+    width: 0.1
+  boundaries:
+    detail: 0 #1
+    scale: '10m'
+    color: 'k'
+    linewidth: 0.5
+  coastlines:
+    scale: '10m'
+    color: 'k'
+    linewidth: 0.2
+  colorbar:
+    orientation: vertical
+    label: 'Units: {units}'
+    fontsize: 8
+  # Colormap for output from Matplotlib. Reference: https://matplotlib.org/stable/gallery/color/colormap_reference.html
+  colormap: "twilight"
+  # vmin: 0
+  # vmax: 12000
+  dpi: 300
+  figwidth: 5
+  projection:
+    projection: PlateCarree
+    latrange: [27.0,55.0]
+    lonrange: [-135.0,-90.0]

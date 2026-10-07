@@ -1,0 +1,82 @@
+dataset:
+  files: 
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_00_v2.1.4/det/history.2024-05-12_00.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_01_v2.1.4/det/history.2024-05-12_01.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_02_v2.1.4/det/history.2024-05-12_02.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_03_v2.1.4/det/history.2024-05-12_03.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_04_v2.1.4/det/history.2024-05-12_04.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_05_v2.1.4/det/history.2024-05-12_05.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_06_v2.1.4/det/history.2024-05-12_06.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_07_v2.1.4/det/history.2024-05-12_07.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_08_v2.1.4/det/history.2024-05-12_08.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_09_v2.1.4/det/history.2024-05-12_09.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_10_v2.1.4/det/history.2024-05-12_10.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_11_v2.1.4/det/history.2024-05-12_11.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_12_v2.1.4/det/history.2024-05-12_12.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_13_v2.1.4/det/history.2024-05-12_13.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_14_v2.1.4/det/history.2024-05-12_14.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_15_v2.1.4/det/history.2024-05-12_15.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_16_v2.1.4/det/history.2024-05-12_16.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_17_v2.1.4/det/history.2024-05-12_17.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_18_v2.1.4/det/history.2024-05-12_18.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_19_v2.1.4/det/history.2024-05-12_19.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_20_v2.1.4/det/history.2024-05-12_20.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_21_v2.1.4/det/history.2024-05-12_21.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_22_v2.1.4/det/history.2024-05-12_22.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240512/rrfs_fcst_23_v2.1.4/det/history.2024-05-12_23.00.00.nc
+    - /gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260921wf/Test1/hrly_12km/stmp/20240513/rrfs_fcst_00_v2.1.4/det/history.2024-05-13_00.00.00.nc
+  gridfile: '/gpfs/f6/bil-fire2-oar/scratch/Huiying.Luo/workflow_260608/rrfs-workflow/fix/conus12km/conus12km.grid.nc'
+  vars:
+    smoke_fine:
+      source: native
+      lev:
+        - 25
+        - 0
+    dust_fine:
+      source: native
+      lev:
+        - 25
+        - 0
+
+plot:
+  # {var} = Variable name
+  # {lev} = Variable level
+  # {varln} = Variable "long name" (not recommended for filenames since these often contain spaces)
+  # {units} = Variable units
+  # {filename} = Name of file being read for plotted data
+  # {fnme} = Name of file (minus extension) being read for plotted data
+  # {date} = The date of plotted data, in %Y-%m-%d format
+  # {time} = The time of plotted data, in %H:%M:%S format
+
+  filename: 'testout/Test1_0hr_{var}_lev{lev}_{date}_{time}_12km.png' #output
+  title:
+    text: 'Plot of {varln}, level {lev} for MPAS forecast, {date} {time}'
+    fontsize: 8
+  edges:
+    #    color: black
+    color: face
+    # set width to 0 to have no borders
+    width: 0.1
+  boundaries:
+    detail: 0 #1
+    scale: '10m'
+    color: 'k'
+    linewidth: 0.5
+  coastlines:
+    scale: '10m'
+    color: 'k'
+    linewidth: 0.2
+  colorbar:
+    orientation: vertical
+    label: 'Units: {units}'
+    fontsize: 8
+  # Colormap for output from Matplotlib. Reference: https://matplotlib.org/stable/gallery/color/colormap_reference.html
+  colormap: "twilight"
+  # vmin: 0
+  # vmax: 12000
+  dpi: 300
+  figwidth: 5
+  projection:
+    projection: PlateCarree
+    latrange: [27.0,55.0]
+    lonrange: [-135.0,-90.0]
